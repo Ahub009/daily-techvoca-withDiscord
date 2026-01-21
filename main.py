@@ -1,8 +1,12 @@
 import os
 import requests
 from google import genai
+from dotenv import load_dotenv
 
-# 환경 변수에서 설정 가져오기
+# .env 파일에서 환경 변수 로드 (로컬 테스트용, GitHub Actions에서는 불필요)
+load_dotenv()
+
+# 환경 변수에서 설정 가져오기 (로컬: .env 파일, GitHub Actions: Secrets)
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 DISCORD_WEBHOOK_URL = os.environ.get('DISCORD_WEBHOOK_URL')
 
@@ -13,7 +17,7 @@ def get_vocabulary():
     prompt = "축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
     # Gemini 1.5 Flash 모델 사용 (무료 티어에서 사용 가능)
     response = client.models.generate_content(
-        model='gemini-1.5-flash',
+        model='models/gemini-1.5-flash',
         contents=prompt
     )
     return response.text
