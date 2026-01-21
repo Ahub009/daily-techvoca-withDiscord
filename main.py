@@ -15,9 +15,9 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 def get_vocabulary():
     prompt = "축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
-    # Gemini 1.5 Flash 모델 사용 (무료 티어에서 사용 가능)
+    # Gemini 1.5 Flash 모델 사용 (구체적인 버전 명시)
     response = client.models.generate_content(
-        model='models/gemini-1.5-flash',
+        model='gemini-1.5-flash-001',
         contents=prompt
     )
     return response.text
