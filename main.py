@@ -6,13 +6,12 @@ from google import genai
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 DISCORD_WEBHOOK_URL = os.environ.get('DISCORD_WEBHOOK_URL')
 
-# Gemini 설정
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash') # 무료 티어용 최신 모델
+# Gemini 설정 
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 def get_vocabulary():
     prompt = "축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
-    # 모델명을 'gemini-1.5-flash'로 지정
+    # 모델명은 가장 안정적인 'gemini-1.5-flash'를 사용합니다
     response = client.models.generate_content(
         model='gemini-1.5-flash',
         contents=prompt
@@ -34,5 +33,3 @@ if __name__ == "__main__":
             print(f"전송 실패: {status}")
     except Exception as e:
         print(f"오류 발생: {e}")
-
-
