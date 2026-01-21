@@ -11,9 +11,9 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 def get_vocabulary():
     prompt = "축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
-    # 모델명은 가장 안정적인 'gemini-1.5-flash'를 사용합니다
+    # Gemini 2.0 Flash 모델 사용
     response = client.models.generate_content(
-        model='gemini-1.5-flash',
+        model='gemini-2.0-flash-001',
         contents=prompt
     )
     return response.text
@@ -33,3 +33,4 @@ if __name__ == "__main__":
             print(f"전송 실패: {status}")
     except Exception as e:
         print(f"오류 발생: {e}")
+
