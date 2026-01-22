@@ -68,7 +68,7 @@ def generate_content(model_name):
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={GEMINI_API_KEY}"
     headers = {'Content-Type': 'application/json'}
     
-    prompt = "축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
+    prompt = "AI 기술과 축구 산업에 관련된 영단어 5개를 선정해서 뜻과 예문을 한국어로 알려줘. 양식은 디스코드에 보기 좋게 구성해줘."
     
     data = {
         "contents": [{"parts": [{"text": prompt}]}]
@@ -121,3 +121,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"⛔ 실패: {e}")
         exit(1)
+
