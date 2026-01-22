@@ -79,7 +79,7 @@ def save_history(new_words):
         if word not in current_set:
             history.append(word)
     
-    # 최근 100개만 유지
+    # 최근 1000개만 유지
     if len(history) > 1000:
         history = history[-1000:]
     
@@ -104,8 +104,9 @@ def generate_content(model_name):
     2. 결과는 반드시 순수한 JSON 배열(Array) 형식이어야 해.
     3. 각 배열의 요소는 다음 키를 가져야 해:
        - 'word': 영어 단어
-       - 'meaning': 깔끔한 한국어 뜻
-       - 'example_en': 해당 단어가 포함된 세련된 영어 비즈니스 예문 (반드시 영어로 작성)
+       - 'meaning': 한국어 요약어 (예: 리팩토링, API 등)
+       - 'description': 해당 기술 용어에 대한 간단하고 명확한 한국어 해설 (1~2문장)
+       - 'example_en': 해당 단어가 포함된 세련된 영어 비즈니스 예문
        - 'example_kr': 위 영어 예문의 자연스러운 한국어 해석
     4. **(볼드) 같은 마크다운 문법은 값(value)에 절대 포함하지 마. 그냥 텍스트만 넣어.
     5. 마지막에 '궁금한 점이 있다면...' 같은 불필요한 멘트는 절대 넣지 마.
@@ -171,6 +172,7 @@ def send_discord_message(vocab_list):
     for item in vocab_list:
         word = item.get("word")
         meaning = item.get("meaning")
+        description = item.get("description", "설명 없음")
         example_en = item.get("example_en")
         example_kr = item.get("example_kr")
         
@@ -178,7 +180,7 @@ def send_discord_message(vocab_list):
             new_words_for_history.append(word)
             fields.append({
                 "name": f"⚽ {word}",
-                "value": f"📖 **뜻**: {meaning}\n🇺🇸 **예문**: {example_en}\n🇰🇷 **해석**: {example_kr}",
+                "value": f"📖 **뜻**: {meaning}\n💡 **해설**: {description}\n🇺🇸 **예문**: {example_en}\n🇰🇷 **해석**: {example_kr}",
                 "inline": False
             })
 
@@ -236,4 +238,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"⛔ 실패: {e}")
         exit(1)
-
