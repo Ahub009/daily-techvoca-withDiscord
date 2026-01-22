@@ -97,7 +97,11 @@ def generate_content(model_name):
     조건:
     1. 이전에 사용한 단어는 절대 다시 추천하지 마: [{used_words_str}]
     2. 결과는 반드시 순수한 JSON 배열(Array) 형식이어야 해.
-    3. 각 배열의 요소는 'word'(영어단어), 'meaning'(깔끔한 한국어 뜻), 'example'(한국어 예문) 키를 가져야 해.
+    3. 각 배열의 요소는 다음 키를 가져야 해:
+       - 'word': 영어 단어
+       - 'meaning': 깔끔한 한국어 뜻
+       - 'example_en': 해당 단어가 포함된 세련된 영어 비즈니스 예문 (반드시 영어로 작성)
+       - 'example_kr': 위 영어 예문의 자연스러운 한국어 해석
     4. **(볼드) 같은 마크다운 문법은 값(value)에 절대 포함하지 마. 그냥 텍스트만 넣어.
     5. 마지막에 '궁금한 점이 있다면...' 같은 불필요한 멘트는 절대 넣지 마.
     6. 코드 블록(```json) 없이 JSON 데이터만 출력해.
@@ -162,13 +166,14 @@ def send_discord_message(vocab_list):
     for item in vocab_list:
         word = item.get("word")
         meaning = item.get("meaning")
-        example = item.get("example")
+        example_en = item.get("example_en")
+        example_kr = item.get("example_kr")
         
         if word:
             new_words_for_history.append(word)
             fields.append({
                 "name": f"⚽ {word}",
-                "value": f"📖 {meaning}\n💡 {example}",
+                "value": f"📖 **뜻**: {meaning}\n🇺🇸 **예문**: {example_en}\n🇰🇷 **해석**: {example_kr}",
                 "inline": False
             })
 
