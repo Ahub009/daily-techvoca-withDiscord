@@ -79,6 +79,10 @@ def save_history(new_words):
         if word not in current_set:
             history.append(word)
     
+    # 최근 100개만 유지
+    if len(history) > 100:
+        history = history[-100:]
+    
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
 
@@ -87,12 +91,13 @@ def generate_content(model_name):
     headers = {'Content-Type': 'application/json'}
     
     used_words = load_history()
-    # 프롬프트에 너무 많은 단어가 들어가면 에러가 날 수 있으므로, 최근 100개만 제외하도록 설정하거나
-    # 토큰 제한을 고려해야 하지만, 지금은 전체 리스트를 보냅니다.
     used_words_str = ", ".join(used_words) if used_words else "없음"
     
     prompt = f"""
-    축구 산업 및 AI 기술과 관련된 영단어 5개를 선정해줘.
+    다음 주제에 맞춰 영단어 5개를 선정해줘:
+    1. AI 기술 및 컴퓨터 산업 관련: 2개
+    2. 개발자 실무 관련: 2개
+    3. 스포츠 산업 관련: 1개
     
     조건:
     1. 이전에 사용한 단어는 절대 다시 추천하지 마: [{used_words_str}]
