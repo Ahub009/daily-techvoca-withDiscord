@@ -2,7 +2,7 @@ name: Daily Vocabulary Bot
 
 on:
   schedule:
-    # 6:00 PM KST is 9:00 AM UTC (KST is UTC+9)
+    # 1:23 PM KST is 4:23 AM UTC (KST is UTC+9)
     - cron: '0 9 * * *'
   workflow_dispatch: # Allows manual trigger
 
