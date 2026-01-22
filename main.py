@@ -80,8 +80,8 @@ def save_history(new_words):
             history.append(word)
     
     # 최근 100개만 유지
-    if len(history) > 100:
-        history = history[-100:]
+    if len(history) > 1000:
+        history = history[-1000:]
     
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
@@ -236,3 +236,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"⛔ 실패: {e}")
         exit(1)
+
